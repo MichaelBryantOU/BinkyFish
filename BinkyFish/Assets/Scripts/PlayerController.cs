@@ -4,24 +4,109 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float Speed = 2;
+    public float Speed = 5;
+    public float TurnSpeed = 5;
+    public float MagnitudeMax = 1, MagnitudeMin = 0;
 
-    private Rigidbody2D rb2d;
+
+    private Rigidbody2D rb;
+    private bool isMoving;
+    private bool isAttacking;
+    private bool isSwimming;
+    private Animator myAnimator;
+    
+
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        rb2d = GetComponent<Rigidbody2D>();
+        rb = gameObject.GetComponent<Rigidbody2D>();
+        myAnimator = GetComponent<Animator>();
+        isAttacking = false;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
 
-        Vector2 Movement = new Vector2(moveHorizontal, moveVertical);
+        #region Movement
+        if (Input.GetKey(KeyCode.W))
+        {
+            rb.AddRelativeForce(Vector2.up);
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
 
-        rb2d.AddForce(Movement * Speed);
+        if (Input.GetKey(KeyCode.S))
+        {
+            rb.AddRelativeForce(Vector2.down);
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
 
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.Rotate(0, 0, TurnSpeed);
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            transform.Rotate(0, 0, -TurnSpeed);
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
+
+
+        #endregion
+
+
+        Attack();
+        
+
+
+        void Attack()
+        {
+
+            if (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0))
+            {
+                isAttacking = true;
+                myAnimator.SetTrigger("isAttacking");
+                myAnimator.ResetTrigger("isSwimming");
+
+
+            }
+            else
+            {
+                isAttacking = false;
+                myAnimator.ResetTrigger("isAttacking");
+                myAnimator.SetTrigger("isSwimming");
+
+            }
+
+        }
+
+        
+
+
+        /* private void Update()
+         {
+             Debug.Log(isMoving);
+
+         }*/
     }
 }
