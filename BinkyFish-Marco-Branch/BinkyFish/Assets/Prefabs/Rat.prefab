@@ -161,6 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e421dfd7e37894b45b182c2c984bd4ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHealth: {fileID: 0}
   trigger: {fileID: 7461545193252711220}
 --- !u!114 &7461545193252711222
 MonoBehaviour:
@@ -178,6 +179,7 @@ MonoBehaviour:
   startingHealth: 3
   enemyHealth: 0
   amount: 1
+  range: 5
 --- !u!54 &530414359
 Rigidbody:
   m_ObjectHideFlags: 0

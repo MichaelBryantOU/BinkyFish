@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - GoldKey
+  - Collectible
   layers:
   - Default
   - TransparentFX
